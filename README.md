@@ -4,13 +4,44 @@ This project serves as an introduction to interacting with a database in an ente
 
 ## Getting Started
 
-Bring up an instance of PostgreSQL.
+These instructions will get you up and running on your local PC. Sometimes we take our tool chains for granted but once in place they allow us to be quite productive. In this project we introduce a handful of tools that professional developers keep in their "tool kit."
+
+### Prerequisites
+
+Since this is about Structured Query Language (SQL), one of the first things we will need access to is a database. In the "old" days we would have to either install a developer edition of a database server or convince a Database Administrator to let us use one of theirs! With the advent of containerization, we can bring a server of our own up almost immediately! All without having to install a bunch of dependencies on our PC.
+
+#### Docker
+
+In this case, we are using Docker and a [PostgreSQL image](https://hub.docker.com/_/postgres?tab=description). Docker is fairly easy to install but for more guidance we have provided information in the [Docker section](https://github.com/gkhays/db-primer/wiki/Docker-for-Windows) of the [wiki](https://github.com/gkhays/db-primer/wiki). So be sure to check it out.
+
+We prefer `docker-compose` because it is suitable for orchestration and reduces the number of parameters and options at invocation time. Using it, bring up an instance of PostgreSQL.
 
 ```bash
 docker-compose up -d db
 ```
 
+For the curious, a recipe is located in the `docker-compose.yml` located in the root of this project.
+
+**Optional**: For those desiring more control, the same outcome can be achieved by using Docker directly.
+
+```bash
+docker pull postgres:10.5-alpine
+docker run -d -p 5432:5432 postgres:10.5-alpine
+```
+
+#### Java
+
+The project requires a Java JDK so that Maven may function correctly. We recommend the [Zulu Community OpenJDK](https://www.azul.com/downloads/zulu-community/?&architecture=x86-64-bit&package=jdk) Java 8 (LTS) version.
+
+#### Maven
+
+Maven is an imperative build tool that enforces a certain structure on Java software projects. It is favored by enterprise software development in order to facilitate repeatable, predictable builds. It also features a rich ecosystem of plugins, several of which we employ in this project. Detailed instruction for installing it are under the [Maven section](https://github.com/gkhays/db-primer/wiki/Maven) in the [wiki](https://github.com/gkhays/db-primer/wiki).
+
 Create the database. If the database already exists it will be dropped. Then the tables are generated using [Liquibase](https://www.liquibase.org/) changesets.
+
+### Installing
+
+The first step is to install the database. This is done using the following Maven invocation from a command line prompt.
 
 ```bash
 mvn clean install -Ddb.create
