@@ -35,9 +35,7 @@ The project requires a Java JDK so that Maven may function correctly. We recomme
 
 #### Maven
 
-Maven is an imperative build tool that enforces a certain structure on Java software projects. It is favored by enterprise software development in order to facilitate repeatable, predictable builds. It also features a rich ecosystem of plugins, several of which we employ in this project. Detailed instruction for installing it are under the [Maven section](https://github.com/gkhays/db-primer/wiki/Maven) in the [wiki](https://github.com/gkhays/db-primer/wiki).
-
-Create the database. If the database already exists it will be dropped. Then the tables are generated using [Liquibase](https://www.liquibase.org/) changesets.
+Maven is an imperative build and dependency management tool that enforces a certain structure on Java software projects. It is favored by enterprise software development in order to facilitate repeatable, predictable builds. It also features a rich ecosystem of plugins, several of which we employ in this project. Detailed instruction for installing it are under the [Maven section](https://github.com/gkhays/db-primer/wiki/Maven) in the [wiki](https://github.com/gkhays/db-primer/wiki).
 
 ### Installing
 
@@ -47,17 +45,52 @@ The first step is to install the database. This is done using the following Mave
 mvn clean install -Ddb.create
 ```
 
-There are many ways to interact with a database in the capacity of an administrator. We will briefly explore two: the first using the pgAdmin 4 graphical user interface; the second using the `usql` command line interface.
+If the database already exists it will be dropped. Then the tables are generated using [Liquibase](https://www.liquibase.org/) changesets.
 
-Bring up an instance of `pgAdmin 4`.
+## Interacting with the Database
+
+There are many ways to interact with a database in the capacity of an administrator or user. We will briefly explore two: the first using the pgAdmin 4 graphical user interface; the second using the `usql` command line interface.
+
+### pgAdmin 4
+
+Bring up a containerized instance of `pgAdmin 4`.
 
 ```bash
 docker-compose up -d pgadmin
 ```
 
-Connect to the database.
+**Optional**: Invoke from `docker run`.
+
+```bash
+docker pull thajeztah/pgadmin4
+docker run --rm -d -p 5050:5050 --name pgadmin thajeztah/pgadmin4
+```
+
+Then navigate to http://localhost:5050 in your browser.
+
+To connect to the database, use the left hand browser panel. Right or context mouse click on Servers >> Create >> Server and give your server a name such as "Local." Switch to the Connection tab and enter the connection information as follows.
 
 ![Create Server](doc/images/create-server.png)
+
+**Note**: Depending on your network configuration you may have to enter your IP address.
+
+Now use the query tool by expanding your server by clicking on the `+` symbol (to the left of `Local` if that is what you named your server). Further expand Databases and choose `devices`. Now right mouse click and choose `Query Tool...`.
+
+![Query Tool](doc/images/query-tool.png)
+
+#### Select Query
+
+The first thing we will want to do is survey the `accesspoint` table by executing a `SELECT` query.
+
+```sql
+SELECT * FROM accesspoint;
+```
+
+Then click on `F5` or the little lightning bolt button. If this is the first time, there will be no rows but the query tool will display the column headings.
+
+![SELECT](doc/images/empty-select.png)
+
+#### Insert Query
 
 Insert data into the `accesspoint` table.
 
@@ -74,10 +107,6 @@ VALUES ('BELL456', '44:e9:dd:4f:c2:7a', 'Sagemcom Broadband SAS', 6);
 
 Display all the rows in the table.
 
-```sql
-SELECT * FROM accesspoint;
-```
-
 In addition to pgAdmin, I am using [usql](https://github.com/xo/usql) to illustrate a command line based approach.
 
 ```bash
@@ -93,3 +122,8 @@ pg:postgres@localhost:5432/devices=> select * from accesspoint;
   3 | BELL456  | 44:e9:dd:4f:c2:7a | Sagemcom Broadband SAS        |       6
 (3 rows)
 ```
+
+## Built With
+
+* [Maven](https://maven.apache.org/) - Dependency management
+* [Liquibase](https://www.liquibase.org/) - Database schema change management
