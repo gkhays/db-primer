@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+    http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.gkh.db</groupId>
@@ -9,7 +12,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkLevel>1.8</jdkLevel>
+        <db.pg.jdbc.version>42.2.8</db.pg.jdbc.version>
+        <db.driver>org.postgresql.Driver</db.driver>
         <db.name>devices</db.name>
+        <db.url>jdbc:postgresql://localhost:5432</db.url>
+        <db.username>postgres</db.username>
+        <db.password>postgres</db.password>
         <db.liquibase.database.class>liquibase.database.core.PostgresDatabase</db.liquibase.database.class>
     </properties>
 
@@ -19,42 +27,127 @@
             <artifactId>liquibase-core</artifactId>
             <version>3.8.1</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.8.1</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>42.2.8</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <changeLogFile>src/main/resources/changelog.xml</changeLogFile>
-                    <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:5432/${db.name}</url>
-                    <username>postgres</username>
-                    <password>postgres</password>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>sql-maven-plugin</artifactId>
-                <version>1.5</version>
-            </plugin>
+            
         </plugins>
     </build>
+
+    <profiles>
+
+        <!-- Create the database; if it already exists, drop it. -->
+        <profile>
+            <id>clean-db</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>db.create</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sql-maven-plugin</artifactId>
+                        <version>1.5</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.postgresql</groupId>
+                                <artifactId>postgresql</artifactId>
+                                <version>${db.pg.jdbc.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <driver>${db.driver}</driver>
+                            <url>${db.url}/postgres</url>
+                            <username>${db.username}</username>
+                            <password>${db.password}</password>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>drop-db</id>
+                                <phase>generate-test-resources</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- Use another database to drop the targeted one -->
+                                    <url>${db.url}/</url>
+                                    <autocommit>true</autocommit>
+                                    <sqlCommand>drop database ${db.name}</sqlCommand>
+                                    <!-- Ignore error if database is unavailable -->
+                                    <onError>continue</onError>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>create-db</id>
+                                <phase>generate-test-resources</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <url>${db.url}/</url>
+                                    <autocommit>true</autocommit>
+                                    <sqlCommand>create database ${db.name}</sqlCommand>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Apply the Liquibase changesets. -->
+        <profile>
+            <id>changesets-to-db</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>db.create</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                        <version>3.8.1</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.postgresql</groupId>
+                                <artifactId>postgresql</artifactId>
+                                <version>${db.pg.jdbc.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <changeLogFile>src/main/resources/changelog.xml</changeLogFile>
+                            <driver>${db.driver}</driver>
+                            <url>${db.url}/${db.name}</url>
+                            <username>${db.username}</username>
+                            <password>${db.password}</password>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>changesets-devices</id>
+                                <phase>process-test-resources</phase>
+                                <goals>
+                                    <goal>update</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
 
 </project>
