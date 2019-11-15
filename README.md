@@ -1,6 +1,8 @@
 # Database Primer
 
-Interacting with a database in an enterprise environment
+This project serves as an introduction to interacting with a database in an enterprise environment. As such, we use tools such as Maven and Liquibase.
+
+## Getting Started
 
 Bring up an instance of PostgreSQL.
 
@@ -8,11 +10,13 @@ Bring up an instance of PostgreSQL.
 docker-compose up -d db
 ```
 
-Create the database.
+Create the database. If the database already exists it will be dropped. Then the tables are generated using [Liquibase](https://www.liquibase.org/) changesets.
 
 ```bash
-mvn liquibase:update
+mvn clean install -Ddb.create
 ```
+
+There are many ways to interact with a database in the capacity of an administrator. We will briefly explore two: the first using the pgAdmin 4 graphical user interface; the second using the `usql` command line interface.
 
 Bring up an instance of `pgAdmin 4`.
 
