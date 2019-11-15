@@ -1,0 +1,11 @@
+version: '2.1'
+services:
+  db:
+    image: postgres:10.5-alpine
+    ports:
+      - "5432:5432"
+  
+  pgadmin:
+    image: thajeztah/pgadmin4
+    ports:
+      - "5050:5050"
