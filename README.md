@@ -49,7 +49,7 @@ If the database already exists it will be dropped. Then the tables are generated
 
 ## Interacting with the Database
 
-There are many ways to interact with a database in the capacity of an administrator or user. We will briefly explore two: the first using the pgAdmin 4 graphical user interface; the second using the `usql` command line interface.
+There are many ways to interact with a database in the capacity of an administrator or user. We will briefly explore the pgAdmin 4 graphical user interface.
 
 ### pgAdmin 4
 
@@ -86,13 +86,13 @@ The first thing we will want to do is survey the `accesspoint` table by executin
 SELECT * FROM accesspoint;
 ```
 
-Then click on `F5` or the little lightning bolt button. If this is the first time, there will be no rows but the query tool will display the column headings.
+Then click on `F5` or the little lightning bolt or `Execute/Refresh` button. If this is the first time, there will be no rows but the query tool will display the column headings.
 
 ![SELECT](doc/images/empty-select.png)
 
 #### Insert Query
 
-Insert data into the `accesspoint` table.
+Insert data into the `accesspoint` table. In the same window we used previously, replace the `SELECT` query with the following `INSERT` statments (all three). Again hit `F5` or the `Execute/Refresh` button.
 
 ```sql
 INSERT INTO accesspoint (essid, bssid, vendor, channel)
@@ -105,23 +105,19 @@ INSERT INTO accesspoint (essid, bssid, vendor, channel)
 VALUES ('BELL456', '44:e9:dd:4f:c2:7a', 'Sagemcom Broadband SAS', 6);
 ```
 
-Display all the rows in the table.
+PgAdmin will inform you if it successfully inserted the rows or display an error message otherwise.
 
-In addition to pgAdmin, I am using [usql](https://github.com/xo/usql) to illustrate a command line based approach.
-
-```bash
-usql postgres://postgres@localhost:5432/devices?sslmode=disable
-```
+Display all the rows in the table. To view the results, we will use a little trick. Under the last insert statement, start a new line and retype the select query.
 
 ```sql
-pg:postgres@localhost:5432/devices=> select * from accesspoint;
- id | essid    | bssid             | vendor                        | channel
-----+----------+-------------------+-------------------------------+---------
-  1 | HoneyPot | c4:6e:1f:0c:82:03 | TP-LINK TECHNOLOGIES CO. LTD. |       4
-  2 | Demo     | 80:2a:a8:5a:fb:2a | Ubiquiti Networks Inc.        |      11
-  3 | BELL456  | 44:e9:dd:4f:c2:7a | Sagemcom Broadband SAS        |       6
-(3 rows)
+SELECT * FROM accesspoint;
 ```
+
+Now using your mouse, highlight only the select statement and click `F5` or the `Execute/Refresh` button. This will only execute the select query while leaving the previous statement intact in the work area.
+
+![Insert Then Select](doc/images/insert-select.png)
+
+See also the [Command-line section](https://github.com/gkhays/db-primer/wiki/Universal-Command-Line-Interface-for-SQL-Databases) of the [wiki](https://github.com/gkhays/db-primer/wiki) for a brief description of the `usql SQL` command-line utility.
 
 ## Built With
 
