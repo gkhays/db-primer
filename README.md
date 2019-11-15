@@ -74,7 +74,7 @@ To connect to the database, use the left hand browser panel. Right or context mo
 
 **Note**: Depending on your network configuration you may have to enter your IP address.
 
-Now use the query tool by expanding your server by clicking on the `+` symbol (to the left of `Local` if that is what you named your server). Further expand Databases and choose `devices`. Now right mouse click and choose `Query Tool...`.
+Now use the query tool by expanding your server by clicking on the `+` symbol (to the left of `Local` (if that is what you named your server). Further expand Databases and choose `devices`. Now right mouse click and choose `Query Tool...`.
 
 ![Query Tool](doc/images/query-tool.png)
 
@@ -116,6 +116,8 @@ SELECT * FROM accesspoint;
 Now using your mouse, highlight only the select statement and click `F5` or the `Execute/Refresh` button. This will only execute the select query while leaving the previous statement intact in the work area.
 
 ![Insert Then Select](doc/images/insert-select.png)
+
+Be sure to continue exploring to become more familiar with the database and features of `pgAdmin`. For more information on SQL see the [corresponding section](https://github.com/gkhays/db-primer/wiki/SQL-Mini-Tutorial) in the [wiki](https://github.com/gkhays/db-primer/wiki).
 
 See also the [Command-line section](https://github.com/gkhays/db-primer/wiki/Universal-Command-Line-Interface-for-SQL-Databases) of the [wiki](https://github.com/gkhays/db-primer/wiki) for a brief description of the `usql SQL` command-line utility.
 
