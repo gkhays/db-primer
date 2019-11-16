@@ -45,7 +45,7 @@ The first step is to install the database. This is done using the following Mave
 mvn clean install -Ddb.create
 ```
 
-If the database already exists it will be dropped. Then the tables are generated using [Liquibase](https://www.liquibase.org/) changesets. The changeset themselves are defined in [src/main/resources/changelog.xml](https://github.com/gkhays/db-primer/blob/master/src/main/resources/changelog.xml) in the resources section of the source code.
+If the database already exists it will be dropped. Then the tables are generated using [Liquibase](https://www.liquibase.org/) changesets. The changesets themselves are defined in [src/main/resources/changelog.xml](https://github.com/gkhays/db-primer/blob/master/src/main/resources/changelog.xml) in the resources section of the source code.
 
 You can learn more about the Maven settings by looking through the `pom.xml` file in the root of this project.
 
