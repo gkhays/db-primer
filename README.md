@@ -20,7 +20,7 @@ We prefer `docker-compose` because it is suitable for orchestration and reduces 
 docker-compose up -d db
 ```
 
-For the curious, a recipe is located in the `docker-compose.yml` located in the root of this project.
+For the curious, a recipe is located in the `docker-compose.yml` file, located in the root of this project.
 
 **Optional**: For those desiring more control, the same outcome can be achieved by using Docker directly.
 
@@ -45,7 +45,9 @@ The first step is to install the database. This is done using the following Mave
 mvn clean install -Ddb.create
 ```
 
-If the database already exists it will be dropped. Then the tables are generated using [Liquibase](https://www.liquibase.org/) changesets.
+If the database already exists it will be dropped. Then the tables are generated using [Liquibase](https://www.liquibase.org/) changesets. The changeset themselves are defined in [src/main/resources/changelog.xml](https://github.com/gkhays/db-primer/blob/master/src/main/resources/changelog.xml) in the resources section of the source code.
+
+You can learn more about the Maven settings by looking through the `pom.xml` file in the root of this project.
 
 ## Interacting with the Database
 
