@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+ 
+<!-- Note: We could declare mapping entities, e.g. -->
+<!-- [<!ENTITY mappings SYSTEM "classpath://mappings.fragment.xml"> -->
+<!-- </!ENTITY connections SYSTEM "classpath://postgres.connection.fragment.cml">] -->
+
+<!-- Where mappings.fragment.xml contains entries as follows: -->
+<!-- <mapping class="org.gkh.db.AccessPoint"/> -->
+
+<!-- Then refer to them below: -->
+
+<!-- Entity references to file with mapping declarations -->
+<!-- &mappings; -->
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/devices</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">postgres</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        <property name="hbm2ddl.auto">update</property>
+        
+		<mapping class="org.gkh.db.AccessPoint" />
+    </session-factory>
+</hibernate-configuration>
