@@ -29,6 +29,12 @@ docker pull postgres:10.5-alpine
 docker run -d -p 5432:5432 postgres:10.5-alpine
 ```
 
+#### Git
+
+You will need Git to retrieved the source code for this project. Instructions for installing Git appear in the [Git section](https://github.com/gkhays/db-primer/wiki/Git-for-Windows) of the [wiki](https://github.com/gkhays/db-primer/wiki).
+
+If you are new to Git or prefer to use a graphical interface, [GitHub Desktop](https://desktop.github.com/) is a very good tool.
+
 #### Java
 
 The project requires a Java JDK so that Maven may function correctly. We recommend the [Zulu Community OpenJDK](https://www.azul.com/downloads/zulu-community/?&architecture=x86-64-bit&package=jdk) Java 8 (LTS) version.
