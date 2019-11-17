@@ -39,7 +39,14 @@ Maven is an imperative build and dependency management tool that enforces a cert
 
 ### Installing
 
-The first step is to install the database. This is done using the following Maven invocation from a command line prompt.
+Clone this repository.
+
+```bash
+git clone https://github.com/gkhays/db-primer
+cd db-primer
+```
+
+Then install the database. This is done using the following Maven invocation from a command line prompt.
 
 ```bash
 mvn clean install -Ddb.create
@@ -48,6 +55,16 @@ mvn clean install -Ddb.create
 If the database already exists it will be dropped. Then the tables are generated using [Liquibase](https://www.liquibase.org/) changesets. The changesets themselves are defined in [src/main/resources/changelog.xml](https://github.com/gkhays/db-primer/blob/master/src/main/resources/changelog.xml) in the resources section of the source code.
 
 You can learn more about the Maven settings by looking through the `pom.xml` file in the root of this project.
+
+### Testing
+
+Programmatic database access is accomplished through [Hibernate](https://hibernate.org/). A couple of tests have been created to demonstrate connectivity and interaction. Execute the test cases with Maven `test`.
+
+```bash
+mvn test
+```
+
+When writing new code, use `EntityManager`. If working on existing code, you may encounter the Hibernate `Session` object. Both approaches are encapsulated.
 
 ## Interacting with the Database
 
