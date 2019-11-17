@@ -33,7 +33,7 @@ docker run -d -p 5432:5432 postgres:10.5-alpine
 
 You will need Git to retrieve the source code for this project. Instructions for installing Git appear in the [Git section](https://github.com/gkhays/db-primer/wiki/Git-for-Windows) of the [wiki](https://github.com/gkhays/db-primer/wiki).
 
-If you are new to Git or prefer to use a graphical interface, [GitHub Desktop](https://desktop.github.com/) is a very good tool.
+**Optional**: If you are new to Git or prefer to use a graphical interface, [GitHub Desktop](https://desktop.github.com/) is a very good tool.
 
 #### Java
 
