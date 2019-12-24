@@ -17,4 +17,18 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="packet:table_creation" author="gkh">
+        <createTable tableName="packet">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="p_pk"/>
+            </column>
+            <column name="no" type="bigint"/>
+            <column name="time" type="varchar(255)"/>
+            <column name="source" type="varchar(255)"/>
+            <column name="destination" type="varchar(255)"/>
+            <column name="protocol" type="varchar(255)"/>
+            <column name="length" type="bigint"/>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>

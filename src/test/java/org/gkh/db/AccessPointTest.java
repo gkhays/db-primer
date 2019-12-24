@@ -50,7 +50,7 @@ public class AccessPointTest {
 	}
 	
 	/**
-	 * Test using JPA and Hibernate 5.
+	 * Test using JPA 2 and Hibernate 5.
 	 */
 	@Test
 	public void testInsert() {
