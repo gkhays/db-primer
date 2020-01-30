@@ -1,6 +1,6 @@
 # Database Primer
 
-This project serves as an introduction to interacting with a database in an enterprise environment. As such, we use tools such as Maven and Liquibase.
+This project serves as an introduction to interacting with a database in an enterprise environment. As such, we use tools like Maven and Liquibase.
 
 ## Getting Started
 
