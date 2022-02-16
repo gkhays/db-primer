@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdkLevel>1.8</jdkLevel>
-        <db.pg.jdbc.version>42.2.8</db.pg.jdbc.version>
+        <db.pg.jdbc.version>42.3.3</db.pg.jdbc.version>
         <db.driver>org.postgresql.Driver</db.driver>
         <db.name>devices</db.name>
         <db.url>jdbc:postgresql://localhost:5432</db.url>
